@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+cd "$(dirname $0)"
+export SPLM_LICENSE_SERVER=28000@localhost
+export NX_BUNDLES="ACD20,ACD21"
+export UGII_JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64/jre/"
+export UGII_SMP_ENABLE=1
+. ./config || { echo "error reading config, please copy config.example to config and edit it to your needs"; exit 1; }
+export UGS_LICENSE_BUNDLE="$NX_BUNDLES"
+export UGII_ROOT_DIR="$NX_BASE_DIR/bin/"
+export UGII_BASE_DIR="$NX_BASE_DIR"
+SSH="ssh -vN $SSH_TARGET"
+$SSH -L 28000:$LICENSE_SERVER_HOST:$LICENSE_SERVER_PORT &
+PID=$!
+sleep 2
+p=$(./nxlmclient.py)
+kill $PID
+echo Port $p
+sleep 1
+
+$SSH -L 28000:$LICENSE_SERVER_HOST:$LICENSE_SERVER_PORT -L $p:$LICENSE_SERVER_HOST:$p &
+PID=$!
+sleep 2
+[[ "$1" == "menu" ]] && $NXPATH/ugii/ugmenu &
+$NX_BASE_DIR/ugii/ugspawn || echo "ups, cannot start NX"
+kill $PID

@@ -1,0 +1,6 @@
+LICENSE_SERVER_HOST="ws11.lab.fablab.uni-erlangen.de"
+LICENSE_SERVER_PORT="28000"
+SSH_TARGET="ak22emur@macgyver.fablab.uni-erlangen.de"
+NX_BASE_DIR="/mnt/disk/home/max/install/nx/install_ugs090"
+export NX_BUNDLES="ACD20,ACD21"
+export UGII_JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64/jre/"
