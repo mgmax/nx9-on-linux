@@ -10,6 +10,9 @@ NX9 unter Linux:
 Making the installer work:
 ```
 apt-get install ksh libxp6 openjdk-7-jre
+dpkg --add-architecture i386
+apt-get update
+apt-get install libc6-i386
 ln -s /tmp /usr/tmp
 export LC_NUMERIC=C
 # otherwise arithmetic error in:  UG_VER=V"$(($NX_VER + 18))" 
